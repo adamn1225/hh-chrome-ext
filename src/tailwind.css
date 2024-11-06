@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App {
+    color: white;
+    text-align: center;
+  }
+  
+  .container {
+    @apply bg-stone-800 p-5 rounded-md w-full h-full max-h-max max-w-max;
+    width: 50rem;
+    height: 50rem;
+  }
+
+  input {
+    @apply bg-white text-gray-950 placeholder:text-gray-800;
+  }
