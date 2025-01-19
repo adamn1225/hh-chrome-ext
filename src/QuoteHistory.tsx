@@ -1,4 +1,3 @@
-// src/QuoteHistory.tsx
 import React, { useEffect, useState } from 'react';
 import { useUser } from './UserContext';
 import { Database } from './database.types';
@@ -50,7 +49,6 @@ const QuoteHistory = () => {
                                     <p><strong>Make:</strong> {quote.make}</p>
                                     <p><strong>Model:</strong> {quote.model}</p>
                                 </div>
-                                <p className='flex items-center justify-start gap-2 border-b'><strong>Freight Description:</strong> {quote?.freightdescription || 'No Description'}</p>
                                 <div className='flex gap-2 justify-start items-center border-b p-1'>
                                     <p><strong>Length:</strong> {quote.length}</p>
                                     <p><strong>Width:</strong> {quote.width}</p>
@@ -58,8 +56,11 @@ const QuoteHistory = () => {
                                     <p><strong>Weight:</strong> {quote.weight}</p>
                                 </div>
                                 <div className='flex gap-3 justify-start items-center'>
-                                    <p><strong>Origin Zip:</strong> {quote.originzip}</p>
-                                    <p><strong>Destination Zip:</strong> {quote.destinationzip}</p>
+                                    <p><strong>Origin Zip:</strong> {quote.origin_zip}</p>
+                                    <p><strong>Destination Zip:</strong> {quote.destination_zip}</p>
+                                </div>
+                                <div className='flex gap-3 justify-start items-center'>
+                                    <p><strong>Rate:</strong> ${quote.rate ? quote.rate.toFixed(2) : 'N/A'}</p>
                                 </div>
                             </div>
                         </li>

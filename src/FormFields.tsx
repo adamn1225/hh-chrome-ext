@@ -1,6 +1,5 @@
 "use client";
-
-import React from 'react';
+import React from "react";
 
 interface FormFieldsProps {
     year: string;
@@ -61,62 +60,57 @@ const FormFields: React.FC<FormFieldsProps> = ({
 }) => {
     return (
         <>
-            <p className='text-sm text-stone-100 font-semibold text-center'>Equipment Make/Model or Description</p>
-            <div className='flex gap-1 items-center justify-center w-full'>
+            <div className='flex gap-1 items-center justify-center  w-full'>
                 <input
                     type="text"
-                    placeholder="Year/Amount"
+                    placeholder="Year"
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
                 <input
                     type="text"
                     placeholder="Make"
                     value={make}
                     onChange={(e) => setMake(e.target.value)}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
                 <input
                     type="text"
                     placeholder="Model"
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
             </div>
-            <p className='text-sm text-stone-100 font-semibold text-center'>Dimensions:</p>
-            <p className='text-stone-100 font-smibold text-center text-xs italic'>
-                (If the dimensions were autofilled than feel free to adjust)
-            </p>
-            <div className='flex gap-1 items-center justify-center w-full'>
+            <div className='flex gap-1 items-center justify-center  w-full'>
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Length"
                     value={length}
                     onChange={(e) => setLength(Number(e.target.value))}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Width"
                     value={width}
                     onChange={(e) => setWidth(Number(e.target.value))}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Height"
                     value={height}
                     onChange={(e) => setHeight(Number(e.target.value))}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Weight"
                     value={weight}
                     onChange={(e) => setWeight(Number(e.target.value))}
-                    className="border p-2 w-full placeholder:text-zinc-500 text-sm"
+                    className="border p-2 w-full"
                 />
             </div>
             <div className='w-full flex justify-stretch items-center my-2'>

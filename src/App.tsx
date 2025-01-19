@@ -1,98 +1,95 @@
-// src/App.tsx
-import React, { Suspense, useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { useUser } from './UserContext';
-import Header from './Header';
+import React, { useEffect, useState, Suspense } from 'react';
+import { User, UserMetadata } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
+import Header from './Header';
+import QuoteManager from './QuoteManager';
 
-const Form = React.lazy(() => import('./Form'));
-const Login = React.lazy(() => import('./Login'));
-const QuoteManager = React.lazy(() => import('./QuoteManager'));
+const App = () => {
+  const [session, setSession] = useState<User | null>(null);
+  const [userProfile, setUserProfile] = useState<UserMetadata | null>(null);
+  const [loading, setLoading] = useState(true);
 
-const PrivateRoute = ({ element }: { element: React.ReactElement }) => {
-  const { session, loading } = useUser();
-  return loading ? (
-    <div>Loading...</div>
-  ) : session ? (
-    element
-  ) : (
-    <Navigate to="/login" />
-  );
-};
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setSession(user);
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+        setUserProfile(profile);
+      }
+      setLoading(false);
+    };
 
-function App() {
-  const { session, setSession, userProfile, loading } = useUser();
-  const [showLogin, setShowLogin] = useState(false);
+    fetchUserProfile();
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session?.user ?? null);
+      if (session?.user) {
+        const fetchProfile = async () => {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+          setUserProfile(profile);
+        };
+        fetchProfile();
+      } else {
+        setUserProfile(null);
+      }
+    });
+  }, []);
 
   const handleLogin = async () => {
-    const { data } = await supabase.auth.getSession();
-    setSession(data.session);
-    setShowLogin(false); // Hide login form after successful login
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
   };
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Error logging out:', error.message);
-    } else {
-      setSession(null);
-      window.location.reload();
-    }
+    await supabase.auth.signOut();
+    setSession(null);
+    setUserProfile(null);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="container">
+    <div>
       <Header />
-
       <Suspense fallback={<div>Loading...</div>}>
-        {showLogin ? (
-          <Login onLogin={handleLogin} />
+        {!session ? (
+          <div className="text-center mb-12 mt-4 flex gap-2 justify-center items-center">
+            <button
+              onClick={handleLogin}
+              className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900"
+            >
+              Login with Google
+            </button>
+          </div>
         ) : (
           <>
-            {!session ? (
-              <div className="text-center mb-12 mt-4 flex gap-2 justify-center items-center">
-                <button
-                  onClick={() => setShowLogin(true)}
-                  className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900 "
-                >
-                  Login
-                </button>
-                <a
-                  href="https://heavyconstruct.com/signup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900 "
-                >
-                  Sign Up
-                </a>
-
-              </div>
-            ) : (
-              <div className="text-center mt-4 flex gap-2 justify-end items-center">
-                <p className="m-0 px-4 py-2 text-gray-900 font-medium">
-                  Welcome {userProfile?.first_name}
-                </p>
-
-                <button
-                  onClick={handleLogout}
-                  className="m-0 px-4 mb-8 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900 "
-                >
-                  Logout
-                </button>
-
-              </div>
-            )}
+            <div className="text-center mt-4 flex gap-2 justify-end items-center">
+              <p className="m-0 px-4 py-2 text-gray-900 font-medium">
+                Welcome {userProfile?.full_name}
+              </p>
+              <button
+                onClick={handleLogout}
+                className="m-0 px-4 mb-8 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900"
+              >
+                Logout
+              </button>
+            </div>
             <QuoteManager />
           </>
         )}
       </Suspense>
-
     </div>
   );
-}
+};
 
 export default App;

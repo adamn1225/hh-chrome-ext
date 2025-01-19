@@ -1,44 +1,36 @@
-// src/Login.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { User } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
 
-const Login = ({ onLogin }: { onLogin: () => void }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+const UserProfile = () => {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-            setError(error.message);
-        } else {
-            onLogin();
-        }
-    };
+    useEffect(() => {
+        const fetchUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            setUser(user);
+            setLoading(false);
+        };
+
+        fetchUser();
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
 
     return (
-        <form onSubmit={handleLogin} className="p-4 space-y-4 w-full">
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="border p-2 w-full"
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border p-2 w-full"
-            />
-            {error && <p className="text-red-500">{error}</p>}
-            <button type="submit" className="bg-amber-400 shadow-lg text-md font-semibold text-gray-900 border border-gray-900 self-center w-full p-2 rounded">
-                Login
-            </button>
-        </form>
+        <div>
+            {user ? (
+                <div>
+                    <p>Name: {user.user_metadata.full_name}</p>
+                    <p>Email: {user.email}</p>
+                    <img src={user.user_metadata.avatar_url} alt="Profile" />
+                </div>
+            ) : (
+                <div>Please log in</div>
+            )}
+        </div>
     );
 };
 
-export default Login;
+export default UserProfile;

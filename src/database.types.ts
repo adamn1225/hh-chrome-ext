@@ -9,560 +9,273 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      auto: {
+        Row: {
+          date: string | null
+          destination_zip: string | null
+          e_make: string | null
+          e_model: string | null
+          e_year: string | null
+          email: string | null
+          first_name: string | null
+          id: number
+          last_name: string | null
+          origin_zip: string | null
+          phone_number: string | null
+        }
+        Insert: {
+          date?: string | null
+          destination_zip?: string | null
+          e_make?: string | null
+          e_model?: string | null
+          e_year?: string | null
+          email?: string | null
+          first_name?: string | null
+          id?: number
+          last_name?: string | null
+          origin_zip?: string | null
+          phone_number?: string | null
+        }
+        Update: {
+          date?: string | null
+          destination_zip?: string | null
+          e_make?: string | null
+          e_model?: string | null
+          e_year?: string | null
+          email?: string | null
+          first_name?: string | null
+          id?: number
+          last_name?: string | null
+          origin_zip?: string | null
+          phone_number?: string | null
+        }
+        Relationships: []
+      }
       chrome_quotes: {
         Row: {
-          created_at: string | null
-          destinationzip: string | null
+          destination_city: string | null
+          destination_input: string | null
+          destination_state: string | null
+          destination_zip: string | null
           email: string | null
-          freightdescription: string | null
+          height: number | null
+          id: number
+          length: number | null
+          make: string | null
+          model: string | null
+          notes: string | null
+          origin_city: string | null
+          origin_input: string | null
+          origin_state: string | null
+          origin_zip: string | null
+          rate: number | null
+          weight: number | null
+          width: number | null
+          year: string | null
+        }
+        Insert: {
+          destination_city?: string | null
+          destination_input?: string | null
+          destination_state?: string | null
+          destination_zip?: string | null
+          email?: string | null
+          height?: number | null
+          id?: number
+          length?: number | null
+          make?: string | null
+          model?: string | null
+          notes?: string | null
+          origin_city?: string | null
+          origin_input?: string | null
+          origin_state?: string | null
+          origin_zip?: string | null
+          rate?: number | null
+          weight?: number | null
+          width?: number | null
+          year?: string | null
+        }
+        Update: {
+          destination_city?: string | null
+          destination_input?: string | null
+          destination_state?: string | null
+          destination_zip?: string | null
+          email?: string | null
+          height?: number | null
+          id?: number
+          length?: number | null
+          make?: string | null
+          model?: string | null
+          notes?: string | null
+          origin_city?: string | null
+          origin_input?: string | null
+          origin_state?: string | null
+          origin_zip?: string | null
+          rate?: number | null
+          weight?: number | null
+          width?: number | null
+          year?: string | null
+        }
+        Relationships: []
+      }
+      equipment: {
+        Row: {
+          date: string | null
+          destination_zip: string | null
+          e_year: string | null
+          email: string | null
+          first_name: string | null
           height: string | null
           id: number
+          last_name: string | null
           length: string | null
-          make: string | null
+          machine_weight: string | null
+          manufacturer: string | null
           model: string | null
-          name: string | null
-          originzip: string | null
-          phone: string | null
-          weight: string | null
+          origin_zip: string | null
+          phone_number: string | null
+          slug: string | null
           width: string | null
-          year: string | null
         }
         Insert: {
-          created_at?: string | null
-          destinationzip?: string | null
+          date?: string | null
+          destination_zip?: string | null
+          e_year?: string | null
           email?: string | null
-          freightdescription?: string | null
+          first_name?: string | null
           height?: string | null
           id?: number
+          last_name?: string | null
           length?: string | null
-          make?: string | null
+          machine_weight?: string | null
+          manufacturer?: string | null
           model?: string | null
-          name?: string | null
-          originzip?: string | null
-          phone?: string | null
-          weight?: string | null
+          origin_zip?: string | null
+          phone_number?: string | null
+          slug?: string | null
           width?: string | null
-          year?: string | null
         }
         Update: {
-          created_at?: string | null
-          destinationzip?: string | null
+          date?: string | null
+          destination_zip?: string | null
+          e_year?: string | null
           email?: string | null
-          freightdescription?: string | null
+          first_name?: string | null
           height?: string | null
           id?: number
+          last_name?: string | null
           length?: string | null
-          make?: string | null
+          machine_weight?: string | null
+          manufacturer?: string | null
           model?: string | null
-          name?: string | null
-          originzip?: string | null
-          phone?: string | null
-          weight?: string | null
+          origin_zip?: string | null
+          phone_number?: string | null
+          slug?: string | null
           width?: string | null
-          year?: string | null
         }
         Relationships: []
       }
-      companies: {
-        Row: {
-          id: string
-          name: string
-          size: string
-        }
-        Insert: {
-          id?: string
-          name: string
-          size: string
-        }
-        Update: {
-          id?: string
-          name?: string
-          size?: string
-        }
-        Relationships: []
-      }
-      documents: {
-        Row: {
-          created_at: string | null
-          description: string | null
-          file_name: string
-          file_type: string
-          file_url: string
-          id: number
-          title: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          description?: string | null
-          file_name: string
-          file_type: string
-          file_url: string
-          id?: number
-          title: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          description?: string | null
-          file_name?: string
-          file_type?: string
-          file_url?: string
-          id?: number
-          title?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      freight: {
+      ftl_ltl: {
         Row: {
           commodity: string | null
-          dimensions: string | null
-          due_date: string | null
-          freight_class: string | null
-          freight_id: string | null
-          freight_type: string | null
+          count: string | null
+          destination_zip: string | null
+          email: string | null
+          first_name: string | null
           height: string | null
-          height_unit: string | null
           id: number
-          in_progress: boolean | null
-          inserted_at: string | null
-          inventory_number: string | null
-          is_complete: boolean | null
+          last_name: string | null
           length: string | null
-          length_unit: string | null
-          make: string | null
-          model: string | null
-          pallet_count: string | null
-          pallets: string | null
-          reminder_time: string | null
-          serial_number: string | null
-          status: string | null
-          user_id: string | null
-          weight: string | null
-          weight_unit: string | null
+          ltl_value: string | null
+          machine_weight: string | null
+          origin_zip: string | null
+          phone_number: string | null
           width: string | null
-          width_unit: string | null
-          year: string | null
-          year_amount: string | null
         }
         Insert: {
           commodity?: string | null
-          dimensions?: string | null
-          due_date?: string | null
-          freight_class?: string | null
-          freight_id?: string | null
-          freight_type?: string | null
+          count?: string | null
+          destination_zip?: string | null
+          email?: string | null
+          first_name?: string | null
           height?: string | null
-          height_unit?: string | null
           id?: number
-          in_progress?: boolean | null
-          inserted_at?: string | null
-          inventory_number?: string | null
-          is_complete?: boolean | null
+          last_name?: string | null
           length?: string | null
-          length_unit?: string | null
-          make?: string | null
-          model?: string | null
-          pallet_count?: string | null
-          pallets?: string | null
-          reminder_time?: string | null
-          serial_number?: string | null
-          status?: string | null
-          user_id?: string | null
-          weight?: string | null
-          weight_unit?: string | null
+          ltl_value?: string | null
+          machine_weight?: string | null
+          origin_zip?: string | null
+          phone_number?: string | null
           width?: string | null
-          width_unit?: string | null
-          year?: string | null
-          year_amount?: string | null
         }
         Update: {
           commodity?: string | null
-          dimensions?: string | null
-          due_date?: string | null
-          freight_class?: string | null
-          freight_id?: string | null
-          freight_type?: string | null
+          count?: string | null
+          destination_zip?: string | null
+          email?: string | null
+          first_name?: string | null
           height?: string | null
-          height_unit?: string | null
           id?: number
-          in_progress?: boolean | null
-          inserted_at?: string | null
-          inventory_number?: string | null
-          is_complete?: boolean | null
+          last_name?: string | null
           length?: string | null
-          length_unit?: string | null
-          make?: string | null
-          model?: string | null
-          pallet_count?: string | null
-          pallets?: string | null
-          reminder_time?: string | null
-          serial_number?: string | null
-          status?: string | null
-          user_id?: string | null
-          weight?: string | null
-          weight_unit?: string | null
+          ltl_value?: string | null
+          machine_weight?: string | null
+          origin_zip?: string | null
+          phone_number?: string | null
           width?: string | null
-          width_unit?: string | null
-          year?: string | null
-          year_amount?: string | null
         }
         Relationships: []
-      }
-      invitation_codes: {
-        Row: {
-          code: string
-          id: number
-          is_used: boolean | null
-        }
-        Insert: {
-          code: string
-          id?: number
-          is_used?: boolean | null
-        }
-        Update: {
-          code?: string
-          id?: number
-          is_used?: boolean | null
-        }
-        Relationships: []
-      }
-      invitations: {
-        Row: {
-          company_id: string | null
-          created_at: string | null
-          email: string
-          id: number
-          invited_by: string | null
-          is_used: boolean | null
-          token: string
-        }
-        Insert: {
-          company_id?: string | null
-          created_at?: string | null
-          email: string
-          id?: number
-          invited_by?: string | null
-          is_used?: boolean | null
-          token: string
-        }
-        Update: {
-          company_id?: string | null
-          created_at?: string | null
-          email?: string
-          id?: number
-          invited_by?: string | null
-          is_used?: boolean | null
-          token?: string
-        }
-        Relationships: []
-      }
-      maintenance: {
-        Row: {
-          commodity: string | null
-          created_at: string | null
-          dimensions: string | null
-          freight_id: number | null
-          id: number
-          inventory_number: string | null
-          maintenance_crew: string | null
-          make: string | null
-          model: string | null
-          need_parts: boolean | null
-          notes: string | null
-          pallets: string | null
-          part: string | null
-          schedule_date: string | null
-          serial_number: string | null
-          urgency: string | null
-          user_id: string | null
-          year: string | null
-          year_amount: string | null
-        }
-        Insert: {
-          commodity?: string | null
-          created_at?: string | null
-          dimensions?: string | null
-          freight_id?: number | null
-          id?: number
-          inventory_number?: string | null
-          maintenance_crew?: string | null
-          make?: string | null
-          model?: string | null
-          need_parts?: boolean | null
-          notes?: string | null
-          pallets?: string | null
-          part?: string | null
-          schedule_date?: string | null
-          serial_number?: string | null
-          urgency?: string | null
-          user_id?: string | null
-          year?: string | null
-          year_amount?: string | null
-        }
-        Update: {
-          commodity?: string | null
-          created_at?: string | null
-          dimensions?: string | null
-          freight_id?: number | null
-          id?: number
-          inventory_number?: string | null
-          maintenance_crew?: string | null
-          make?: string | null
-          model?: string | null
-          need_parts?: boolean | null
-          notes?: string | null
-          pallets?: string | null
-          part?: string | null
-          schedule_date?: string | null
-          serial_number?: string | null
-          urgency?: string | null
-          user_id?: string | null
-          year?: string | null
-          year_amount?: string | null
-        }
-        Relationships: []
-      }
-      notifications: {
-        Row: {
-          created_at: string | null
-          id: number
-          is_read: boolean | null
-          message: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          is_read?: boolean | null
-          message: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          is_read?: boolean | null
-          message?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      orders: {
-        Row: {
-          cancellation_reason: string | null
-          created_at: string | null
-          destination_street: string | null
-          earliest_pickup_date: string | null
-          id: number
-          is_archived: boolean | null
-          latest_pickup_date: string | null
-          notes: string | null
-          origin_street: string | null
-          quote_id: number | null
-          status: string | null
-          user_id: string | null
-        }
-        Insert: {
-          cancellation_reason?: string | null
-          created_at?: string | null
-          destination_street?: string | null
-          earliest_pickup_date?: string | null
-          id?: number
-          is_archived?: boolean | null
-          latest_pickup_date?: string | null
-          notes?: string | null
-          origin_street?: string | null
-          quote_id?: number | null
-          status?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          cancellation_reason?: string | null
-          created_at?: string | null
-          destination_street?: string | null
-          earliest_pickup_date?: string | null
-          id?: number
-          is_archived?: boolean | null
-          latest_pickup_date?: string | null
-          notes?: string | null
-          origin_street?: string | null
-          quote_id?: number | null
-          status?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_orders_shippingquotes"
-            columns: ["quote_id"]
-            isOneToOne: false
-            referencedRelation: "shippingquotes"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       profiles: {
         Row: {
           address: string | null
-          company_id: string | null
-          company_name: string | null
-          company_size: string | null
-          email: string
-          email_notifications: boolean | null
-          first_name: string | null
-          id: string
-          inserted_at: string | null
-          last_name: string | null
-          phone_number: string | null
-          profile_picture: string | null
-          role: string
-        }
-        Insert: {
-          address?: string | null
-          company_id?: string | null
-          company_name?: string | null
-          company_size?: string | null
-          email: string
-          email_notifications?: boolean | null
-          first_name?: string | null
-          id: string
-          inserted_at?: string | null
-          last_name?: string | null
-          phone_number?: string | null
-          profile_picture?: string | null
-          role: string
-        }
-        Update: {
-          address?: string | null
-          company_id?: string | null
-          company_name?: string | null
-          company_size?: string | null
-          email?: string
-          email_notifications?: boolean | null
-          first_name?: string | null
-          id?: string
-          inserted_at?: string | null
-          last_name?: string | null
-          phone_number?: string | null
-          profile_picture?: string | null
-          role?: string
-        }
-        Relationships: []
-      }
-      shippingquotes: {
-        Row: {
-          commodity: string | null
-          destination_city: string | null
-          destination_state: string | null
-          destination_street: string | null
-          destination_zip: string | null
-          due_date: string | null
-          email: string | null
-          first_name: string | null
-          height: string | null
-          id: number
-          inserted_at: string | null
-          is_archived: boolean | null
-          is_complete: boolean | null
-          last_name: string | null
-          length: string | null
-          make: string | null
-          model: string | null
-          origin_city: string | null
-          origin_state: string | null
-          origin_street: string | null
-          origin_zip: string | null
-          pallet_count: string | null
-          price: number | null
-          quote_id: string | null
-          user_id: string | null
-          weight: string | null
-          width: string | null
-          year_amount: string | null
-        }
-        Insert: {
-          commodity?: string | null
-          destination_city?: string | null
-          destination_state?: string | null
-          destination_street?: string | null
-          destination_zip?: string | null
-          due_date?: string | null
-          email?: string | null
-          first_name?: string | null
-          height?: string | null
-          id?: number
-          inserted_at?: string | null
-          is_archived?: boolean | null
-          is_complete?: boolean | null
-          last_name?: string | null
-          length?: string | null
-          make?: string | null
-          model?: string | null
-          origin_city?: string | null
-          origin_state?: string | null
-          origin_street?: string | null
-          origin_zip?: string | null
-          pallet_count?: string | null
-          price?: number | null
-          quote_id?: string | null
-          user_id?: string | null
-          weight?: string | null
-          width?: string | null
-          year_amount?: string | null
-        }
-        Update: {
-          commodity?: string | null
-          destination_city?: string | null
-          destination_state?: string | null
-          destination_street?: string | null
-          destination_zip?: string | null
-          due_date?: string | null
-          email?: string | null
-          first_name?: string | null
-          height?: string | null
-          id?: number
-          inserted_at?: string | null
-          is_archived?: boolean | null
-          is_complete?: boolean | null
-          last_name?: string | null
-          length?: string | null
-          make?: string | null
-          model?: string | null
-          origin_city?: string | null
-          origin_state?: string | null
-          origin_street?: string | null
-          origin_zip?: string | null
-          pallet_count?: string | null
-          price?: number | null
-          quote_id?: string | null
-          user_id?: string | null
-          weight?: string | null
-          width?: string | null
-          year_amount?: string | null
-        }
-        Relationships: []
-      }
-      usage_stats: {
-        Row: {
-          active_time: number
+          avatar_url: string | null
+          birthday: string | null
           created_at: string | null
-          id: number
-          login_count: number
-          user_id: string | null
+          full_name: string | null
+          gender: string | null
+          id: string
+          phone_number: string | null
         }
         Insert: {
-          active_time: number
+          address?: string | null
+          avatar_url?: string | null
+          birthday?: string | null
           created_at?: string | null
-          id?: number
-          login_count: number
-          user_id?: string | null
+          full_name?: string | null
+          gender?: string | null
+          id: string
+          phone_number?: string | null
         }
         Update: {
-          active_time?: number
+          address?: string | null
+          avatar_url?: string | null
+          birthday?: string | null
           created_at?: string | null
-          id?: number
-          login_count?: number
-          user_id?: string | null
+          full_name?: string | null
+          gender?: string | null
+          id?: string
+          phone_number?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          description: string | null
+          id: string | null
+          name: string | null
+          rating: number | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          rating?: number | null
+        }
+        Update: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          rating?: number | null
         }
         Relationships: []
       }

@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import equipmentDims from '../public/equipment_dims.json'; // Import the JSON data
-import structuredEscortRequirements from '../public/structured_escort_requirements.json';
-import statePermitData from '../public/state_permit_data.json';
-import trailerHeights from '../public/trailer-heights.json';
-import FormFields from './FormFields'; // Import the FormFields component
+import equipmentDims from './assets/equipment_dims.json';
+import trailerHeights from './assets/trailer-heights.json';
+import FormFields from './FormFields';
+import { supabase } from './supabaseClient';
+import { Session } from '@supabase/supabase-js';
 
 interface EscortRequirement {
     width_min?: number;
@@ -14,23 +14,6 @@ interface EscortRequirement {
     escort_requirement: string;
 }
 
-interface StructuredEscortRequirements {
-    [key: string]: EscortRequirement[];
-}
-
-type StatePermitData = {
-    [key: string]: {
-        Width: string;
-        Height: string;
-        "Single Axle": string;
-        "Tandem Axle": string;
-        "Gross Vehicle Weight": string;
-    };
-};
-
-type StatePermitDataKeys = keyof typeof statePermitData;
-
-// Levenshtein distance function
 const levenshteinDistance = (a: string, b: string) => {
     const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
         Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
@@ -49,7 +32,6 @@ const levenshteinDistance = (a: string, b: string) => {
             }
         }
     }
-
     return matrix[a.length][b.length];
 };
 
@@ -58,10 +40,10 @@ const Form = () => {
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
     const [freightDescription, setFreightDescription] = useState('');
-    const [length, setLength] = useState(Number);
-    const [width, setWidth] = useState(Number);
-    const [height, setHeight] = useState(Number);
-    const [weight, setWeight] = useState(Number);
+    const [length, setLength] = useState<number>(0);
+    const [width, setWidth] = useState<number>(0);
+    const [height, setHeight] = useState<number>(0);
+    const [weight, setWeight] = useState<number>(0);
     const [originInput, setOriginInput] = useState('');
     const [destinationInput, setDestinationInput] = useState('');
     const [originZip, setOriginZip] = useState('');
@@ -73,12 +55,22 @@ const Form = () => {
     const [emailError, setEmailError] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [submissionMessage, setSubmissionMessage] = useState('');
-    const [originLat, setOriginLat] = useState(0);
-    const [originLon, setOriginLon] = useState(0);
-    const [destinationLat, setDestinationLat] = useState(0);
-    const [destinationLon, setDestinationLon] = useState(0);
+    const [originLat, setOriginLat] = useState<number>(0);
+    const [originLon, setOriginLon] = useState<number>(0);
+    const [destinationLat, setDestinationLat] = useState<number>(0);
+    const [destinationLon, setDestinationLon] = useState<number>(0);
     const [distance, setDistance] = useState<number | null>(null);
     const [rate, setRate] = useState<number | null>(null);
+
+    const [session, setSession] = useState<Session | null>(null);
+
+    useEffect(() => {
+        const getSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setSession(session);
+        };
+        getSession();
+    }, []);
 
     useEffect(() => {
         const normalizedMake = make.toLowerCase();
@@ -90,10 +82,8 @@ const Form = () => {
         for (const item of equipmentDims) {
             const itemMake = item.Manufacturer.toLowerCase();
             const itemModel = item.Model.toLowerCase();
-
             const makeDistance = levenshteinDistance(normalizedMake, itemMake);
             const modelDistance = levenshteinDistance(normalizedModel, itemModel);
-
             if (makeDistance <= 2 && modelDistance <= 2) {
                 const totalDistance = makeDistance + modelDistance;
                 if (totalDistance < closestDistance) {
@@ -115,32 +105,6 @@ const Form = () => {
             setWeight(0);
         }
     }, [make, model]);
-
-    const checkPermitRequirements = (state: string) => {
-        const stateKey = `${state} Size and Weight Limits` as keyof typeof statePermitData;
-
-        if (!(stateKey in statePermitData)) {
-            console.error(`State key "${stateKey}" not found in permit data.`);
-            return false;
-        }
-
-        const stateData = statePermitData[stateKey];
-        const overWidth = width > parseFloat(stateData.Width.replace(/[^0-9.]/g, '')) * 12;
-        const overHeight = height > parseFloat(stateData.Height.replace(/[^0-9.]/g, ''));
-        const overWeight = weight > parseFloat(stateData["Gross Vehicle Weight"].replace(/[^0-9.]/g, ''));
-
-        return overWidth || overHeight || overWeight;
-    };
-
-    const checkEscortRequirements = (state: string) => {
-        const requirements = (structuredEscortRequirements as StructuredEscortRequirements)[state.toLowerCase()] || [];
-        return requirements.filter(rule => {
-            return (
-                (rule.width_min && width >= rule.width_min && (!rule.width_max || width <= rule.width_max)) ||
-                (rule.height_min && height >= rule.height_min)
-            );
-        });
-    };
 
     const getTransportHeight = (equipmentHeight: number, weight: number) => {
         let trailerType = 'Stepdeck';
@@ -168,7 +132,7 @@ const Form = () => {
     function haversineDistance(originLat: number, originLon: number, destinationLat: number, destinationLon: number) {
         const toRadians = (degrees: number) => degrees * (Math.PI / 180);
 
-        const R = 6371; // Radius of the Earth in kilometers
+        const R = 6371;
         const dLat = toRadians(destinationLat - originLat);
         const dLon = toRadians(destinationLon - originLon);
         const lat1 = toRadians(originLat);
@@ -178,8 +142,8 @@ const Form = () => {
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        const distance = R * c; // Distance in kilometers
-        return distance * 0.621371; // Convert to miles
+        const distance = R * c;
+        return distance * 0.621371;
     }
 
     const handleOriginInputBlur = async () => {
@@ -190,9 +154,13 @@ const Form = () => {
                     const data = response.data;
                     const city = data.places[0]['place name'];
                     const state = data.places[0]['state abbreviation'];
+                    const lat = parseFloat(data.places[0].latitude);
+                    const lon = parseFloat(data.places[0].longitude);
                     setOriginCity(city);
                     setOriginState(state);
                     setOriginZip(originInput);
+                    setOriginLat(lat);
+                    setOriginLon(lon);
                     setOriginInput(`${city}, ${state} ${originInput}`);
                 }
             } catch (error) {
@@ -206,9 +174,13 @@ const Form = () => {
                     if (response.status === 200) {
                         const data = response.data;
                         const zip = data.places[0]['post code'];
+                        const lat = parseFloat(data.places[0].latitude);
+                        const lon = parseFloat(data.places[0].longitude);
                         setOriginCity(city);
                         setOriginState(state);
                         setOriginZip(zip);
+                        setOriginLat(lat);
+                        setOriginLon(lon);
                         setOriginInput(`${city}, ${state} ${zip}`);
                     }
                 } catch (error) {
@@ -226,9 +198,13 @@ const Form = () => {
                     const data = response.data;
                     const city = data.places[0]['place name'];
                     const state = data.places[0]['state abbreviation'];
+                    const lat = parseFloat(data.places[0].latitude);
+                    const lon = parseFloat(data.places[0].longitude);
                     setDestinationCity(city);
                     setDestinationState(state);
                     setDestinationZip(destinationInput);
+                    setDestinationLat(lat);
+                    setDestinationLon(lon);
                     setDestinationInput(`${city}, ${state} ${destinationInput}`);
                 }
             } catch (error) {
@@ -242,9 +218,13 @@ const Form = () => {
                     if (response.status === 200) {
                         const data = response.data;
                         const zip = data.places[0]['post code'];
+                        const lat = parseFloat(data.places[0].latitude);
+                        const lon = parseFloat(data.places[0].longitude);
                         setDestinationCity(city);
                         setDestinationState(state);
                         setDestinationZip(zip);
+                        setDestinationLat(lat);
+                        setDestinationLon(lon);
                         setDestinationInput(`${city}, ${state} ${zip}`);
                     }
                 } catch (error) {
@@ -257,22 +237,12 @@ const Form = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const distance = haversineDistance(originLat, originLon, destinationLat, destinationLon);
-        setDistance(distance + 200);
+        const distance = haversineDistance(originLat, originLon, destinationLat, destinationLon) + 200;
+        setDistance(distance);
 
         const { transportHeight, trailerType } = getTransportHeight(height, weight);
         console.log(`Transport Height: ${transportHeight} ft, Trailer Type: ${trailerType}`);
 
-        const originPermitRequired = checkPermitRequirements(originState);
-        const destinationPermitRequired = checkPermitRequirements(destinationState);
-
-        const originEscorts = checkEscortRequirements(originState);
-        const destinationEscorts = checkEscortRequirements(destinationState);
-
-        const totalEscortCost = originEscorts.length * 500 + destinationEscorts.length * 500;
-        const totalPermitCost = (originPermitRequired ? 125 : 0) + (destinationPermitRequired ? 125 : 0);
-
-        // Default rates and conditions
         const fullLoadRate = 3;
         const partialLoadRate = 2;
         let baseRate = fullLoadRate;
@@ -295,7 +265,7 @@ const Form = () => {
         const isOverWidth = width > 96;
         const isOverHeight = transportHeight > 10.5;
         const isOverLength = length >= 40;
-        const requiresFullLoad = isOverWidth || isOverHeight || isOverLength || weight >= 35000;
+        const requiresFullLoad = isOverWidth || isOverHeight || weight >= 35000;
 
         if (requiresFullLoad) {
             baseRate = fullLoadRate;
@@ -320,27 +290,44 @@ const Form = () => {
         const permitsPerState = isOverWidth && isOverHeight ? 200 : (isOverWidth || isOverHeight ? 125 : 0);
         const numStates = 4;
         const permitCost = permitsPerState * numStates;
-
         const baseCost = totalRate * distance;
         const totalCost = baseCost + pilotCarCost + permitCost;
         const serviceFee = totalCost * 0.15;
         const finalCost = totalCost + serviceFee;
 
-        console.log(`Base Rate: $${baseRate} per mile`);
-        console.log(`Overweight Cost: $${overweightCost} per mile`);
-        console.log(`Pilot Car Cost: $${pilotCarCost.toFixed(2)}`);
-        console.log(`Permit Cost: $${permitCost.toFixed(2)}`);
-        console.log(`Total Cost (before service fee): $${totalCost.toFixed(2)}`);
-        console.log(`Final Cost (after service fee): $${finalCost.toFixed(2)}`);
-
         setRate(finalCost);
         setSubmissionMessage(`Distance: ${distance.toFixed(2)} miles\nTrailer Type: ${trailerType}\nShipping Estimate: $${finalCost.toFixed(2)}`);
         setFormSubmitted(true);
-    }
 
-    const validateEmail = (email: string) => {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
+        try {
+            const { error } = await supabase
+                .from('chrome_quotes')
+                .insert([
+                    {
+                        year,
+                        make,
+                        model,
+                        length,
+                        width,
+                        height,
+                        weight,
+                        origin_zip: originZip,
+                        destination_zip: destinationZip,
+                        rate: finalCost,
+                        email: session?.user?.email // Add the email field here
+                    },
+                ]);
+
+            if (error) {
+                console.error('Error inserting data:', error);
+                setSubmissionMessage('Error submitting the form. Please try again.');
+            } else {
+                console.log('Data inserted successfully');
+            }
+        } catch (error) {
+            console.error('Error inserting data:', error);
+            setSubmissionMessage('Error submitting the form. Please try again.');
+        }
     };
 
     const handleGoBack = () => {
@@ -393,21 +380,18 @@ const Form = () => {
                             Submit
                         </button>
                     </div>
-                    {distance !== null && (
-                        <div className="text-center p-4">
-                            <p className="text-stone-100 text-md font-medium">Distance: {distance.toFixed(2)} miles</p>
-                        </div>
-                    )}
-                    {rate !== null && (
-                        <div className="text-center p-4">
-                            <p className="text-stone-100 text-md font-medium">Shipping Estimate: ${rate.toFixed(2)}</p>
-                        </div>
-                    )}
-                    {submissionMessage && (
-                        <div className="text-center p-4">
-                            <p className="text-stone-100 text-md font-medium">{submissionMessage}</p>
-                        </div>
-                    )}
+                    <div className='flex flex-col items-center justify-center'>
+                        {distance !== null && (
+                            <div className="text-center px-4">
+                                <p className="text-stone-100 text-md font-medium">Distance: <span className='font-bold'>{distance.toFixed(2)} miles</span></p>
+                            </div>
+                        )}
+                        {rate !== null && (
+                            <div className="text-center px-4">
+                                <p className="text-stone-100 text-md font-medium">Shipping Estimate: <span className='font-bold'>${rate.toFixed(2)}</span></p>
+                            </div>
+                        )}
+                    </div>
                 </form>
             )}
         </div>
