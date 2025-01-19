@@ -66,7 +66,7 @@ const App = () => {
           <div className="text-center mb-12 mt-4 flex gap-2 justify-center items-center">
             <button
               onClick={handleLogin}
-              className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900"
+              className="m-0 px-4 py-2 border border-zinc-800 shadow-md bg-amber-400 text-zinc-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-zinc-800"
             >
               Login with Google
             </button>
@@ -74,12 +74,12 @@ const App = () => {
         ) : (
           <>
             <div className="text-center mt-4 flex gap-2 justify-end items-center">
-              <p className="m-0 px-4 py-2 text-gray-900 font-medium">
+              <p className="m-0 px-4 py-2 text-zinc-900 font-medium">
                 Welcome {userProfile?.full_name}
               </p>
               <button
                 onClick={handleLogout}
-                className="m-0 px-4 mb-8 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900"
+                className="m-0 px-4 mb-8 py-2 border border-zinc-900 shadow-md bg-amber-400 text-zinc-900 font-medium hover:border-zinc-800 hover:bg-amber-400/70 hover:border hover:text-zinc-800"
               >
                 Logout
               </button>
