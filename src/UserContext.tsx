@@ -1,7 +1,8 @@
 // src/UserContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useSession } from '@supabase/auth-helpers-react';
 import { Session } from '@supabase/supabase-js';
+import { supabase } from './supabaseClient'; // Import the supabase client from supabaseClient.ts
 import { Database } from './database.types';
 
 interface UserProfile {
@@ -29,7 +30,6 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const session = useSession();
-    const supabase = useSupabaseClient<Database>();
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -65,7 +65,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
             setLoading(false);
         }
-    }, [currentSession, supabase]);
+    }, [currentSession]);
 
     return (
         <UserContext.Provider value={{ userProfile, setUserProfile, loading, error, session: currentSession, setSession: setCurrentSession }}>

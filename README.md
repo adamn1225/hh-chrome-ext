@@ -1,6 +1,21 @@
-# Getting Started with Create React App
+# Single Purpose Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This extension was built in part of heavyconstruct.com.
+
+Looking for equipment, building material, cars, tractors, or any other types of freight online but wondered what the shipping cost would be? Why is it important?
+
+- Make a feasible decision on your online purchases by getting an online rate first before finalizing purchases.
+- Bidding on an item in auction? Know your bidding power by understanding the costs around the purchase.
+
+Create an account at heavyconstruct.com/signup to keep your quote request history, manage construction inventory, procurement, and logistics. 
+
+## Storage Justification
+
+Our extension, "Heavy Construct - Haul Quotes," requires the storage permission to save user preferences and settings locally. This allows users to customize their experience and retain their settings across sessions. Specifically, we use the storage permission to:
+
+Save user-selected options for haul rate calculations.
+Cache data to improve performance and reduce the need for repeated network requests.
+By using the storage permission, we ensure that users have a seamless and personalized experience with our extension.
 
 ## Available Scripts
 
@@ -28,19 +43,4 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# hh-chrome-ext

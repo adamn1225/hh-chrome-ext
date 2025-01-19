@@ -4,7 +4,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 import Header from './Header';
 import { supabase } from './supabaseClient';
-import ClientForm from './ClientForm';
 
 const Form = React.lazy(() => import('./Form'));
 const Login = React.lazy(() => import('./Login'));
@@ -46,9 +45,9 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header />
-      
+
       <Suspense fallback={<div>Loading...</div>}>
         {showLogin ? (
           <Login onLogin={handleLogin} />
@@ -63,14 +62,14 @@ function App() {
                   Login
                 </button>
                 <a
-                  href="https://ssta-nts-client.netlify.app/signup"
+                  href="https://heavyconstruct.com/signup"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900 "
                 >
                   Sign Up
                 </a>
-                  
+
               </div>
             ) : (
               <div className="text-center mt-4 flex gap-2 justify-end items-center">
@@ -84,13 +83,14 @@ function App() {
                 >
                   Logout
                 </button>
+
               </div>
             )}
             <QuoteManager />
           </>
         )}
-      
       </Suspense>
+
     </div>
   );
 }

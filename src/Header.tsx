@@ -14,7 +14,7 @@ const Header = () => {
             <h1 className="text-xl font-bold">HH Quote Extension</h1>
             {userProfile && (
                 <div className="flex items-center justify-center gap-4">
-                    <p>Welcome, {userProfile.first_name}</p>
+                    <p>Welcome, {userProfile.first_name || 'User'}</p>
                 </div>
             )}
         </header>
