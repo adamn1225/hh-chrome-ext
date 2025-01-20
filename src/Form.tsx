@@ -63,6 +63,7 @@ const Form = () => {
     const [rate, setRate] = useState<number | null>(null);
     const [link, setLink] = useState('');
     const [notes, setNotes] = useState('');
+    const [date, setDate] = useState(new Date().toISOString());
     const [session, setSession] = useState<Session | null>(null);
 
     useEffect(() => {
@@ -321,7 +322,8 @@ const Form = () => {
                         notes,
                         link,
                         rate: finalCost,
-                        email: session?.user?.email // Add the email field here
+                        email: session?.user?.email,
+                        date: new Date().toISOString(),
                     },
                 ]);
 
@@ -345,15 +347,15 @@ const Form = () => {
         <div>
             {formSubmitted ? (
                 <div className="text-center p-4">
-                    <p className="text-stone-100 text-md font-medium" style={{ whiteSpace: 'pre-line' }}>{submissionMessage}</p>
-                    <button onClick={handleGoBack} className="mt-4 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-semibold hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900">
+                    <p className="text-gray-900 text-md font-medium" style={{ whiteSpace: 'pre-line' }}>{submissionMessage}</p>
+                    <button onClick={handleGoBack} className="mt-4 px-4 py-2 shadow-md bg-amber-400 text-gray-900 font-semibold">
                         Go Back
                     </button>
                 </div>
             ) : (
-                <form onSubmit={handleSubmit} className="p-4 space-y-4 w-full">
-                    <p className="text-stone-100 text-center text-md text-nowrap w-full font-medium my-2">Fill out the form below to get an instant quote</p>
-                    <span className='flex justify-center items-center'><hr className="my-4 w-1/2 text-stone-100/20" /></span>
+                <form onSubmit={handleSubmit} className="p-4 space-y-2 w-full text-gray-900">
+                    <p className="text-gray-900 text-center text-lg text-nowrap w-full font-semibold mb-2">Fill out the form below to get an instant quote</p>
+                    <span className='flex justify-center items-center'><hr className="my-4 w-1/2 text-gray-900/20" /></span>
                     <FormFields
                         year={year}
                         setYear={setYear}
@@ -387,19 +389,19 @@ const Form = () => {
                         setNotes={setNotes}
                     />
                     <div className='flex justify-center'>
-                        <button type="submit" className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-semibold hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900">
+                        <button type="submit" className="m-0 px-4 py-2 shadow-md bg-amber-400 text-gray-900 font-semibold hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900">
                             Submit
                         </button>
                     </div>
                     <div className='flex flex-col items-center justify-center'>
                         {distance !== null && (
                             <div className="text-center px-4">
-                                <p className="text-stone-100 text-md font-medium">Distance: <span className='font-bold'>{distance.toFixed(2)} miles</span></p>
+                                <p className="text-gray-950 text-md font-medium">Distance: <span className='font-bold'>{distance.toFixed(2)} miles</span></p>
                             </div>
                         )}
                         {rate !== null && (
                             <div className="text-center px-4">
-                                <p className="text-stone-100 text-md font-medium">Shipping Estimate: <span className='font-bold'>${rate.toFixed(2)}</span></p>
+                                <p className="text-gray-950 text-md font-medium">Shipping Estimate: <span className='font-bold'>${rate.toFixed(2)}</span></p>
                             </div>
                         )}
                     </div>

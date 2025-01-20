@@ -53,6 +53,7 @@ export type Database = {
       }
       chrome_quotes: {
         Row: {
+          date: string | null
           destination_city: string | null
           destination_input: string | null
           destination_state: string | null
@@ -75,6 +76,7 @@ export type Database = {
           year: string | null
         }
         Insert: {
+          date?: string | null
           destination_city?: string | null
           destination_input?: string | null
           destination_state?: string | null
@@ -97,6 +99,7 @@ export type Database = {
           year?: string | null
         }
         Update: {
+          date?: string | null
           destination_city?: string | null
           destination_input?: string | null
           destination_state?: string | null

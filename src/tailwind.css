@@ -8,7 +8,7 @@
 }
 
 .container {
-    @apply bg-zinc-800 bg-cover p-5 rounded-md w-full h-full max-h-max max-w-max;
+    @apply bg-gray-200 drop-shadow-md bg-cover p-5 rounded-md w-full h-full max-h-max max-w-max;
     width: 75rem;
     height: 75rem;
     overflow: auto;

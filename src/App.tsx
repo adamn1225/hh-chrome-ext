@@ -75,11 +75,10 @@ const App = () => {
           <>
             <div className="text-center mt-4 flex gap-2 justify-end items-center">
               <p className="m-0 px-4 py-2 text-zinc-900 font-medium">
-                Welcome {userProfile?.full_name}
               </p>
               <button
                 onClick={handleLogout}
-                className="m-0 px-4 mb-8 py-2 border border-zinc-900 shadow-md bg-amber-400 text-zinc-900 font-medium hover:border-zinc-800 hover:bg-amber-400/70 hover:border hover:text-zinc-800"
+                className="m-0 px-4 mb-8 mt-12 py-2 shadow-md bg-amber-400 text-zinc-900 font-medium hover:border-zinc-800 hover:bg-amber-400/70 hover:border hover:text-zinc-800"
               >
                 Logout
               </button>
