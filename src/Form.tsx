@@ -49,7 +49,6 @@ const Form: React.FC<FormProps> = ({ session }) => {
     const [originState, setOriginState] = useState('');
     const [destinationCity, setDestinationCity] = useState('');
     const [destinationState, setDestinationState] = useState('');
-    const [emailError, setEmailError] = useState('');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [originLat, setOriginLat] = useState<number>(0);
@@ -60,7 +59,6 @@ const Form: React.FC<FormProps> = ({ session }) => {
     const [rate, setRate] = useState<number | null>(null);
     const [link, setLink] = useState('');
     const [notes, setNotes] = useState('');
-    const [date, setDate] = useState(new Date().toISOString());
     const [userSession, setUserSession] = useState<Session | null>(null);
 
     useEffect(() => {

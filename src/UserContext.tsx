@@ -2,8 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useSession } from '@supabase/auth-helpers-react';
 import { Session } from '@supabase/supabase-js';
-import { supabase } from './supabaseClient'; // Import the supabase client from supabaseClient.ts
-import { Database } from './database.types';
+import { supabase } from './supabaseClient';
 
 interface UserProfile {
     id: string;

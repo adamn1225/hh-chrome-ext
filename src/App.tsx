@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { User, Session } from '@supabase/supabase-js';
+import { Session } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
 import Header from './Header';
 import QuoteManager from './QuoteManager';
