@@ -22,7 +22,6 @@ module.exports = {
     ],
     rules: {
         'no-unused-vars': ['warn', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false }],
-        // You can also disable the rule entirely if needed
-        // 'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['warn', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false }],
     },
 };

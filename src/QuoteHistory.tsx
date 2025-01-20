@@ -49,7 +49,7 @@ const QuoteHistory: React.FC<QuoteHistoryProps> = ({ session }) => {
         };
 
         try {
-            await axios.post('/api/send-email', emailData); // Updated to use Netlify function endpoint
+            await axios.post('https://sc-chrome-ext.netlify.app/api/send-email', emailData); // Updated to use Netlify function endpoint
             alert('Email sent successfully!');
         } catch (error) {
             console.error('Error sending email:', error);
