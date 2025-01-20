@@ -61,7 +61,8 @@ const Form = () => {
     const [destinationLon, setDestinationLon] = useState<number>(0);
     const [distance, setDistance] = useState<number | null>(null);
     const [rate, setRate] = useState<number | null>(null);
-
+    const [link, setLink] = useState('');
+    const [notes, setNotes] = useState('');
     const [session, setSession] = useState<Session | null>(null);
 
     useEffect(() => {
@@ -73,6 +74,10 @@ const Form = () => {
     }, []);
 
     useEffect(() => {
+        if (model.trim() === '') {
+            return;
+        }
+
         const normalizedMake = make.toLowerCase();
         const normalizedModel = model.toLowerCase();
 
@@ -313,6 +318,8 @@ const Form = () => {
                         weight,
                         origin_zip: originZip,
                         destination_zip: destinationZip,
+                        notes,
+                        link,
                         rate: finalCost,
                         email: session?.user?.email // Add the email field here
                     },
@@ -374,6 +381,10 @@ const Form = () => {
                         destinationState={destinationState}
                         handleOriginInputBlur={handleOriginInputBlur}
                         handleDestinationInputBlur={handleDestinationInputBlur}
+                        link={link}
+                        setLink={setLink}
+                        notes={notes}
+                        setNotes={setNotes}
                     />
                     <div className='flex justify-center'>
                         <button type="submit" className="m-0 px-4 py-2 border border-gray-900 shadow-md bg-amber-400 text-gray-900 font-semibold hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-gray-900">

@@ -28,6 +28,10 @@ interface FormFieldsProps {
     destinationState: string;
     handleOriginInputBlur: () => void;
     handleDestinationInputBlur: () => void;
+    link: string;
+    setLink: (value: string) => void;
+    notes: string;
+    setNotes: (value: string) => void;
 }
 
 const FormFields: React.FC<FormFieldsProps> = ({
@@ -57,6 +61,10 @@ const FormFields: React.FC<FormFieldsProps> = ({
     destinationState,
     handleOriginInputBlur,
     handleDestinationInputBlur,
+    link,
+    setLink,
+    notes,
+    setNotes,
 }) => {
     return (
         <>
@@ -144,6 +152,25 @@ const FormFields: React.FC<FormFieldsProps> = ({
                     <input type="hidden" value={destinationCity} />
                     <input type="hidden" value={destinationState} />
                 </div>
+            </div>
+            <div className='flex flex-col gap-1 items-center justify-center w-full'>
+                <label className='text-stone-100 font-medium text-sm'>Link to reference (optional)
+                    <input
+                        type="text"
+                        placeholder="Link"
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
+                        className="border p-2 w-full"
+                    />
+                </label>
+                <label className="text-stone-100 font-medium text-sm">Notes about the machine wether it's about transport or purchasing (optional)
+                    <textarea
+                        placeholder="Notes"
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        className="border p-2 w-full"
+                    />
+                </label>
             </div>
         </>
     );

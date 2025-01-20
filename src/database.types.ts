@@ -61,6 +61,7 @@ export type Database = {
           height: number | null
           id: number
           length: number | null
+          link: string | null
           make: string | null
           model: string | null
           notes: string | null
@@ -82,6 +83,7 @@ export type Database = {
           height?: number | null
           id?: number
           length?: number | null
+          link?: string | null
           make?: string | null
           model?: string | null
           notes?: string | null
@@ -103,6 +105,7 @@ export type Database = {
           height?: number | null
           id?: number
           length?: number | null
+          link?: string | null
           make?: string | null
           model?: string | null
           notes?: string | null
