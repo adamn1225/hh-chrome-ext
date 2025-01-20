@@ -33,29 +33,27 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: "manifest.json", to: "../manifest.json" },
+                { from: "public/manifest.json", to: "manifest.json" },
+                { from: "public/sc-48-chrome.webp", to: "sc-48-chrome.webp" },
+                { from: "public/sc-128-chrome.webp", to: "sc-128-chrome.webp" },
             ],
         }),
         ...getHtmlPlugins(["index"]),
-
         new MiniCssExtractPlugin({
             filename: "[name].css",
         }),
-        
         new Dotenv(),
-        
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-        path: path.join(__dirname, "dist/js"),
-        filename: "[name].js",
+        path: path.join(__dirname, "dist"),
+        filename: "js/[name].js",
     },
 };
-    
 
-    function getHtmlPlugins(chunks) {
+function getHtmlPlugins(chunks) {
     return chunks.map(
         (chunk) =>
             new HTMLPlugin({

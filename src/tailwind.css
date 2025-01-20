@@ -9,8 +9,8 @@
 
 .container {
     @apply bg-gray-200 text-zinc-900 drop-shadow-md bg-cover p-5 rounded-md w-full h-full max-h-max max-w-max;
-    width: 75rem;
-    height: 75rem;
+    width: 90rem;
+    height: 90rem;
     overflow: auto;
     /* Add overflow to handle content that exceeds the container size */
 }

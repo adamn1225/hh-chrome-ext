@@ -4,12 +4,22 @@
     "name": "Shipping-Connect - Actually Instant Shipping Rates",
     "description": "Get a Haul Rate while searching the web for equipment - published by SSTA Inc.",
     "action": {
-        "default_popup": "js/index.html",
-        "default_title": "Shipping-Connect 48Quote Extension"
+        "default_popup": "index.html",
+        "default_title": "Shipping-Connect Quote Extension"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "identity",
+        "identity.email"
     ],
+    "oauth2": {
+        "client_id": "358507295534-4eorpm3t6jlrmrs9hlj1fcaa4srh3mgb.apps.googleusercontent.com",
+        "scopes": [
+            "openid",
+            "email",
+            "profile"
+        ]
+    },
     "icons": {
         "16": "sc-48-chrome.webp",
         "48": "sc-48-chrome.webp",

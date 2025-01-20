@@ -24,4 +24,13 @@ module.exports = {
         'no-unused-vars': ['warn', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false }],
         '@typescript-eslint/no-unused-vars': ['warn', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false }],
     },
+    globals: {
+        chrome: 'readonly',
+        module: 'readonly',
+    },
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
 };
