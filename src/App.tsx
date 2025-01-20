@@ -59,15 +59,20 @@ const App = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className=''>
       <Header />
       <Suspense fallback={<div>Loading...</div>}>
         {!session ? (
-          <div className="text-center mb-12 mt-4 flex gap-2 justify-center items-center">
+          <div className="mt-12 flex gap-2 justify-center items-center w-96 h-44">
             <button
               onClick={handleLogin}
-              className="m-0 px-4 py-2 border border-zinc-800 shadow-md bg-amber-400 text-zinc-900 font-medium hover:border-gray-900 hover:bg-amber-400/70 hover:border hover:text-zinc-800"
+              className="flex items-center m-0 px-4 py-2 border border-gray-300 shadow-md bg-white text-gray-700 font-medium hover:bg-gray-100"
             >
+              <img
+                src="https://developers.google.com/identity/images/g-logo.png"
+                alt="Google logo"
+                className="w-5 h-5 mr-2"
+              />
               Login with Google
             </button>
           </div>
