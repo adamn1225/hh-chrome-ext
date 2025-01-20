@@ -4,6 +4,7 @@
   "private": true,
   "type": "commonjs",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.4",
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/supabase-js": "^2.46.1",
@@ -15,10 +16,12 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "axios": "^1.7.9",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "crypto-browserify": "^3.12.1",
     "dotenv": "^16.4.5",
     "emailjs-com": "^3.2.0",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "nodemailer": "^6.9.16",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
@@ -29,7 +32,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run start-client\" \"npm run start-server\"",
+    "start-client": "react-scripts start",
+    "start-server": "node --experimental-modules server.mjs",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack -w --config webpack.config.js",
     "test": "react-scripts test",
@@ -56,6 +61,7 @@
   "devDependencies": {
     "@types/dotenv-webpack": "^7.0.8",
     "@types/react-router-dom": "^5.3.3",
+    "concurrently": "^9.1.2",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",

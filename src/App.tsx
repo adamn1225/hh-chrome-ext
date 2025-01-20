@@ -1,47 +1,29 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { User, UserMetadata } from '@supabase/supabase-js';
+import { User, Session } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
 import Header from './Header';
 import QuoteManager from './QuoteManager';
 
 const App = () => {
-  const [session, setSession] = useState<User | null>(null);
-  const [userProfile, setUserProfile] = useState<UserMetadata | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setSession(user);
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-        setUserProfile(profile);
-      }
+    const fetchSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
       setLoading(false);
     };
 
-    fetchUserProfile();
+    fetchSession();
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session?.user ?? null);
-      if (session?.user) {
-        const fetchProfile = async () => {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
-          setUserProfile(profile);
-        };
-        fetchProfile();
-      } else {
-        setUserProfile(null);
-      }
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
     });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogin = async () => {
@@ -53,13 +35,12 @@ const App = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setSession(null);
-    setUserProfile(null);
   };
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className=''>
+    <div>
       <Header />
       <Suspense fallback={<div>Loading...</div>}>
         {!session ? (
@@ -80,6 +61,7 @@ const App = () => {
           <>
             <div className="text-center mt-4 flex gap-2 justify-end items-center">
               <p className="m-0 px-4 py-2 text-zinc-900 font-medium">
+                {session.user?.email}
               </p>
               <button
                 onClick={handleLogout}
@@ -88,7 +70,7 @@ const App = () => {
                 Logout
               </button>
             </div>
-            <QuoteManager />
+            <QuoteManager session={session} />
           </>
         )}
       </Suspense>

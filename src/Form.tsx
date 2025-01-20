@@ -7,11 +7,8 @@ import FormFields from './FormFields';
 import { supabase } from './supabaseClient';
 import { Session } from '@supabase/supabase-js';
 
-interface EscortRequirement {
-    width_min?: number;
-    width_max?: number;
-    height_min?: number;
-    escort_requirement: string;
+interface FormProps {
+    session: Session | null;
 }
 
 const levenshteinDistance = (a: string, b: string) => {
@@ -35,7 +32,7 @@ const levenshteinDistance = (a: string, b: string) => {
     return matrix[a.length][b.length];
 };
 
-const Form = () => {
+const Form: React.FC<FormProps> = ({ session }) => {
     const [year, setYear] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -64,12 +61,12 @@ const Form = () => {
     const [link, setLink] = useState('');
     const [notes, setNotes] = useState('');
     const [date, setDate] = useState(new Date().toISOString());
-    const [session, setSession] = useState<Session | null>(null);
+    const [userSession, setUserSession] = useState<Session | null>(null);
 
     useEffect(() => {
         const getSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
-            setSession(session);
+            setUserSession(session);
         };
         getSession();
     }, []);
@@ -318,11 +315,15 @@ const Form = () => {
                         height,
                         weight,
                         origin_zip: originZip,
+                        origin_city: originCity,
+                        origin_state: originState,
                         destination_zip: destinationZip,
+                        destination_city: destinationCity,
+                        destination_state: destinationState,
                         notes,
                         link,
                         rate: finalCost,
-                        email: session?.user?.email,
+                        email: userSession?.user?.email,
                         date: new Date().toISOString(),
                     },
                 ]);

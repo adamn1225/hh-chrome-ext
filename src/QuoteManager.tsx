@@ -1,9 +1,13 @@
-// src/QuoteManager.tsx
 import React, { useState } from 'react';
 import Form from './Form';
 import QuoteHistory from './QuoteHistory';
+import { Session } from '@supabase/supabase-js';
 
-const QuoteManager = () => {
+interface QuoteManagerProps {
+    session: Session | null;
+}
+
+const QuoteManager: React.FC<QuoteManagerProps> = ({ session }) => {
     const [activeTab, setActiveTab] = useState('form');
 
     return (
@@ -22,8 +26,8 @@ const QuoteManager = () => {
                     Quote History
                 </button>
             </div>
-            {activeTab === 'form' && <Form />}
-            {activeTab === 'history' && <QuoteHistory />}
+            {activeTab === 'form' && <Form session={session} />}
+            {activeTab === 'history' && <QuoteHistory session={session} />}
         </div>
     );
 };
