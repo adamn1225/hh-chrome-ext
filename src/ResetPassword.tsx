@@ -7,16 +7,8 @@ const ResetPassword = () => {
     const [message, setMessage] = useState('');
 
     const handleResetPassword = async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const accessToken = urlParams.get('access_token');
-
         if (password !== confirmPassword) {
             setMessage('Passwords do not match');
-            return;
-        }
-
-        if (!accessToken) {
-            setMessage('Invalid access token');
             return;
         }
 

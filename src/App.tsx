@@ -70,7 +70,9 @@ const App = () => {
   };
 
   const handleForgotPassword = async () => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://www.sc-chrome-ext.netlify.app/reset-password',
+    });
     if (error) {
       console.error('Error sending password reset email:', error.message);
     } else {
