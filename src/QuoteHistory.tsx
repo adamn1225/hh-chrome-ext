@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Database } from './database.types';
 import { supabase } from './supabaseClient';
-import axios from 'axios';
 import { Session } from '@supabase/supabase-js';
 
 interface QuoteHistoryProps {
@@ -49,7 +49,7 @@ const QuoteHistory: React.FC<QuoteHistoryProps> = ({ session }) => {
         };
 
         try {
-            await axios.post('http://localhost:3001/api/send-email', emailData);
+            await axios.post('/api/send-email', emailData); // Updated to use Netlify function endpoint
             alert('Email sent successfully!');
         } catch (error) {
             console.error('Error sending email:', error);
@@ -69,8 +69,8 @@ const QuoteHistory: React.FC<QuoteHistoryProps> = ({ session }) => {
                         <tr>
                             <th className="py-2 px-4 border-b">Freight Item</th>
                             <th className="py-2 px-4 border-b">Dimensions/Weight</th>
-                            <th className="py-2 px-4 border-b">Origin Zip</th>
-                            <th className="py-2 px-4 border-b">Destination Zip</th>
+                            <th className="py-2 px-4 border-b">Origin</th>
+                            <th className="py-2 px-4 border-b">Destination</th>
                             <th className="py-2 px-4 border-b">Rate</th>
                             <th className="py-2 px-4 border-b">Link</th>
                             <th className="py-2 px-4 border-b">Notes</th>
