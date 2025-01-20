@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "commonjs",
+  "homepage": "sc-chrome-ext.netlify.app",
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
     "@supabase/auth-helpers-react": "^0.5.0",
@@ -34,7 +35,7 @@
   },
   "scripts": {
     "start": "netlify dev",
-    "build": "CI=false react-scripts build",
+    "build": "webpack --config webpack.config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

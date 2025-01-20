@@ -21,7 +21,7 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center h-screen w-full bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg border w-1/2 border-amber-500">
                 <h1 className="text-2xl mb-4 text-gray-900 font-semibold">Shipper-Connect</h1>
                 <h1 className="text-xl mb-4 text-amber-500">Reset Password</h1>
