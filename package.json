@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "netlify dev",
-    "build": "webpack --config webpack.config.js",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -59,7 +59,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/chrome": "^0.0.297",
     "@types/dotenv-webpack": "^7.0.8",
     "@types/react-router-dom": "^5.3.3",
     "concurrently": "^9.1.2",
