@@ -179,7 +179,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
                         className="border p-2 w-full placeholder:text-zinc-500 text-sm"
                     />
                 </label>
-                <label className="text-gray-950 font-medium text-sm ">Notes about the machine wether it's about transport or purchasing (optional)
+                <label className="text-gray-950 font-medium text-sm ">Notes about the machine wether it&apos;s about transport or purchasing (optional)
                     <textarea
                         placeholder="Notes"
                         value={notes}
