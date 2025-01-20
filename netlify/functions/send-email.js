@@ -1,7 +1,8 @@
 const sgMail = require('@sendgrid/mail');
 const dotenv = require('dotenv');
-const cors = require('cors');
 const express = require('express');
+const serverless = require('serverless-http');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -36,4 +37,4 @@ app.post('/send-email', async (req, res) => {
     }
 });
 
-module.exports = app;
+module.exports.handler = serverless(app);
