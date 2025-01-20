@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './App';
+import ResetPassword from './ResetPassword';
 import { UserProvider } from './UserContext';
 import "./tailwind.css";
 
@@ -14,6 +15,7 @@ rootDiv.render(
     <UserProvider>
       <Router>
         <App />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Router>
     </UserProvider>
   </React.StrictMode>
